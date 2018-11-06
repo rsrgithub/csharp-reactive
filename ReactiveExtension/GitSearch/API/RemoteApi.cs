@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
@@ -15,7 +16,7 @@ namespace GitSearch.API
             var client = new RestClient(BaseUrl)
             {
                 Authenticator =
-                    new OAuth2AuthorizationRequestHeaderAuthenticator("feccdb407d21977cfe118d3c7f1f435e4171e818")
+                    new OAuth2AuthorizationRequestHeaderAuthenticator("94edb37aa5e69b15d95974fbeb8261d425455edc")
             };
 
             var response = await client.ExecuteTaskAsync<T>(request);
@@ -35,7 +36,7 @@ namespace GitSearch.API
             var client = new RestClient(BaseUrl)
             {
                 Authenticator =
-                    new OAuth2AuthorizationRequestHeaderAuthenticator("feccdb407d21977cfe118d3c7f1f435e4171e818")
+                    new OAuth2AuthorizationRequestHeaderAuthenticator("94edb37aa5e69b15d95974fbeb8261d425455edc")
             };
 
             var response = client.Execute<T>(request);

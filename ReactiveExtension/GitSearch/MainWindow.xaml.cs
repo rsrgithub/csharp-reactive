@@ -78,7 +78,7 @@ namespace GitSearch
                     {
                         Console.WriteLine($"Managed Thread Id----{Thread.CurrentThread.ManagedThreadId}");
 
-                        return _gitHubApi.SearchGitHubUsersAsync(str).SubscribeOn(ThreadPoolScheduler.Instance);
+                        return _gitHubApi.SearchGitHubUsersAsync(str);
                     })
                     .Switch()
                     .ObserveOn(Dispatcher)
