@@ -1,7 +1,6 @@
-﻿<Application x:Class="ReactiveExtension.App"
+﻿<Application x:Class="RxDragDrop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ReactiveExtension"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
