@@ -36,24 +36,53 @@ namespace GitSearch
             SetupObservable();
         }
 
+        //private void SetupObservable()
+        //{
+        //    _subscription?.Dispose();
+
+        //    _subscription =
+        //        Observable.FromEventPattern<TextChangedEventArgs>(SearchTextBox, "TextChanged")
+        //            .Select(args =>
+        //            {
+        //                TextBox tb = args.EventArgs.Source as TextBox;
+        //                string str = tb.Text;
+        //                return str;
+        //            })
+        //            .Throttle(TimeSpan.FromSeconds(1))
+        //            .DistinctUntilChanged()
+        //            .Select(str =>
+        //            {
+        //                Console.WriteLine($"Managed Thread Id----{Thread.CurrentThread.ManagedThreadId}");
+
+        //                return _gitHubApi.SearchGitHubUsers(str).SubscribeOn(ThreadPoolScheduler.Instance);
+        //            })
+        //            .Switch()
+        //            .Subscribe(x =>
+        //            {
+        //                x.ForEach(p => Console.WriteLine(p.Login));
+        //            })
+        //            ;
+        //}        
+
         private void SetupObservable()
         {
             _subscription?.Dispose();
 
             _subscription =
                 Observable.FromEventPattern<TextChangedEventArgs>(SearchTextBox, "TextChanged")
-                    .SelectMany(args =>
+                    .Select(args => ((TextBox)args.Sender).Text)
+                    .Throttle(TimeSpan.FromMilliseconds(200))
+                    .DistinctUntilChanged()
+                    .Where(str => !string.IsNullOrWhiteSpace(str.Trim()))
+                    .Select(str =>
                     {
                         Console.WriteLine($"Managed Thread Id----{Thread.CurrentThread.ManagedThreadId}");
-                        TextBox tb = args.EventArgs.Source as TextBox;
-                        return _gitHubApi.SearchGitHubUsers(tb.Text).SubscribeOn(NewThreadScheduler.Default);
+
+                        return _gitHubApi.SearchGitHubUsersAsync(str).SubscribeOn(ThreadPoolScheduler.Instance);
                     })
-                    
-                    .Subscribe(x =>
-                    {
-                        x.ForEach(p => Console.WriteLine(p.Login));
-                    })
-                    ;
-        }        
+                    .Switch()
+                    .ObserveOn(Dispatcher)
+                    .Subscribe(x => { ListBox.ItemsSource = x; });
+        }
     }
 }

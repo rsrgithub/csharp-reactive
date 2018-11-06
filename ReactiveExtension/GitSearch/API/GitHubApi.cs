@@ -12,9 +12,7 @@ namespace GitSearch.API
     public class GitHubApi : RemoteApi
     {
         public IObservable<List<GitHubUser>> SearchGitHubUsers(string strToSearch)
-        {
-           
-
+        {           
             return Observable.Create<List<GitHubUser>>(observer =>
             {
                 Console.WriteLine($"Managed Thread Id----{Thread.CurrentThread.ManagedThreadId}");
@@ -28,6 +26,20 @@ namespace GitSearch.API
                 return Disposable.Empty;
             });
             
+        }
+
+        public IObservable<List<GitHubUser>> SearchGitHubUsersAsync(string strToSearch)
+        {
+            return Observable.FromAsync(() =>
+            {
+                var request = new RestRequest { Resource = "search/users" };
+
+                request.AddQueryParameter("q", strToSearch);
+                var result = ExecuteAsync<SearchResult>(request);
+
+                return result;
+            }).Select(x => x.FoundUsers);
+
         }
     }
 }
