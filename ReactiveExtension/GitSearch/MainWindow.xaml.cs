@@ -71,7 +71,7 @@ namespace GitSearch
             _subscription =
                 Observable.FromEventPattern<TextChangedEventArgs>(SearchTextBox, "TextChanged")
                     .Select(args => ((TextBox)args.Sender).Text)
-                    .Throttle(TimeSpan.FromMilliseconds(200))
+                    .Throttle(TimeSpan.FromMilliseconds(300))
                     .DistinctUntilChanged()
                     .Where(str => !string.IsNullOrWhiteSpace(str.Trim()))
                     .Select(str =>
