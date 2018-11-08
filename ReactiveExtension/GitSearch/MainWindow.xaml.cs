@@ -83,6 +83,7 @@ namespace GitSearch
                     .Switch()
                     .ObserveOn(Dispatcher)
                     .Subscribe(x => { ListBox.ItemsSource = x; });
+            //Test commit
         }
     }
 }
