@@ -74,12 +74,7 @@ namespace GitSearch
                     .Throttle(TimeSpan.FromMilliseconds(300))
                     .DistinctUntilChanged()
                     .Where(str => !string.IsNullOrWhiteSpace(str.Trim()))
-                    .Select(str =>
-                    {
-                        Console.WriteLine($"Managed Thread Id----{Thread.CurrentThread.ManagedThreadId}");
-
-                        return _gitHubApi.SearchGitHubUsersAsync(str);
-                    })
+                    .Select(str => _gitHubApi.SearchGitHubUsersAsync(str))
                     .Switch()
                     .ObserveOn(Dispatcher)
                     .Subscribe(x => { ListBox.ItemsSource = x; });            
