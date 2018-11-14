@@ -16,7 +16,7 @@ namespace GitSearch.API
             var client = new RestClient(BaseUrl)
             {
                 Authenticator =
-                    new OAuth2AuthorizationRequestHeaderAuthenticator("94edb37aa5e69b15d95974fbeb8261d425455edc")
+                    new OAuth2AuthorizationRequestHeaderAuthenticator("b9e826a936007fc1a636ade00ae16d13d5d2ab39")
             };
 
             var response = await client.ExecuteTaskAsync<T>(request);
@@ -36,7 +36,7 @@ namespace GitSearch.API
             var client = new RestClient(BaseUrl)
             {
                 Authenticator =
-                    new OAuth2AuthorizationRequestHeaderAuthenticator("94edb37aa5e69b15d95974fbeb8261d425455edc")
+                    new OAuth2AuthorizationRequestHeaderAuthenticator("b9e826a936007fc1a636ade00ae16d13d5d2ab39")
             };
 
             var response = client.Execute<T>(request);

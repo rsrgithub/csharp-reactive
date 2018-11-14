@@ -14,10 +14,7 @@ namespace GitSearch.API
         public IObservable<List<GitHubUser>> SearchGitHubUsers(string strToSearch)
         {           
             return Observable.Create<List<GitHubUser>>(observer =>
-            {
-                Console.WriteLine($"Managed Thread Id----{Thread.CurrentThread.ManagedThreadId}");
-                Thread.Sleep(5000);
-
+            {                                
                 var request = new RestRequest { Resource = "search/users" };
 
                 request.AddQueryParameter("q", strToSearch);
